@@ -17,7 +17,7 @@ jobs:
         name: Unit Testing
         services: 
           mongo-db:
-            image: ${{ vars.Username_dockerhub }}/solar-system:${{ github.sha }}
+            image: karimm99/solar-system:bb681c3aafec10a6706287df2b4aafa70db4929c
             ports: 
               - 27017:27017
         env: 
