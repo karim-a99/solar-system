@@ -147,10 +147,10 @@ jobs:
         - name: Install kubectl
           uses: azure/setup-kubectl@v4
           with:
-            version: 'v1.32.0'
+            version: 'v1.32.1'
             
         - name: Fetch cluster details
           run: |
-            kubectl version --short 
+            kubectl version 
             echo -------------
             kubectl get nodes 
