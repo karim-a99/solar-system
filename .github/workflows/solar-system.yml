@@ -174,11 +174,28 @@ jobs:
             echo -------------
             kubectl get nodes 
 
+            
+
         - name: Install Ingress NGINX
           run: |
             kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.0/deploy/static/provider/kind/deploy.yaml
-            kubectl rollout status deployment/ingress-nginx-controller -n ingress-nginx --timeout=300s
- 
+            
+        - name: Wait for ingress-nginx to be ready
+          run: |
+            echo "Waiting for ingress-nginx-controller to be available..."
+            kubectl wait --namespace ingress-nginx \
+              --for=condition=available deployment/ingress-nginx-controller \
+              --timeout=300s
+
+        - name: Debug if ingress controller is not ready
+          if: failure()
+          run: |
+            echo "Fetching debug info for ingress-nginx-controller..."
+            kubectl -n ingress-nginx get all
+            kubectl -n ingress-nginx describe deployment ingress-nginx-controller
+            kubectl -n ingress-nginx logs deploy/ingress-nginx-controller || true
+
+
 
         - name: Save Nginx Ingress Controller IP as a GITHUB Environment Variable
           run: |
