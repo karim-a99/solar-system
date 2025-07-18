@@ -174,7 +174,7 @@ jobs:
             echo -------------
             kubectl get nodes 
 
-            
+
 
         - name: Install Ingress NGINX
           run: |
@@ -199,7 +199,9 @@ jobs:
 
         - name: Save Nginx Ingress Controller IP as a GITHUB Environment Variable
           run: |
-            echo "INGRESS_IP=$(kubectl -n ingress-nginx get services ingress-nginx-controller -o jsonpath="{.status.loadBalancer.ingress[0].ip}")" >> $GITHUB_ENV
+            echo "INGRESS_IP=$(kubectl get svc ingress-nginx-controller -n ingress-nginx -o jsonpath="{.spec.ports[0].nodePort}" >> $GITHUB_ENV
+
+          # echo "INGRESS_IP=$(kubectl -n ingress-nginx get services ingress-nginx-controller -o jsonpath="{.status.loadBalancer.ingress[0].ip}")" >> $GITHUB_ENV
 
         - name: replace placeholders in manifest files
           uses: cschleiden/replace-tokens@v1
