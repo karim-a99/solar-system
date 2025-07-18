@@ -177,7 +177,7 @@ jobs:
         - name: Install Ingress NGINX
           run: |
             kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.0/deploy/static/provider/kind/deploy.yaml
-            kubectl rollout status deployment/ingress-nginx-controller -n ingress-nginx --timeout=120s
+            kubectl rollout status deployment/ingress-nginx-controller -n ingress-nginx --timeout=300s
  
 
         - name: Save Nginx Ingress Controller IP as a GITHUB Environment Variable
