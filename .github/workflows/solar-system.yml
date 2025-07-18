@@ -144,6 +144,11 @@ jobs:
         - name: Checkout Repo
           uses: actions/checkout@v4
 
+        - name: Set up kubectl v1.27.3
+          uses: azure/setup-kubectl@v3
+          with:
+            version: 'v1.27.3'
+
         - name: Set up KinD cluster
           uses: engineerd/setup-kind@v0.5.0
           with:
