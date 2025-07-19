@@ -187,6 +187,14 @@ jobs:
               --for=condition=available deployment/ingress-nginx-controller \
               --timeout=300s
 
+        - name: Wait for ingress-nginx admission webhook to be ready
+          run: |
+            echo "Waiting for ingress-nginx-controller-admission webhook to be ready..."
+            kubectl wait --namespace ingress-nginx \
+              --for=condition=ready pod \
+              -l app.kubernetes.io/component=admission-webhook \
+              --timeout=120s
+
         - name: Debug if ingress controller is not ready
           if: failure()
           run: |
