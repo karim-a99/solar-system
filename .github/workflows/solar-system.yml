@@ -216,6 +216,10 @@ jobs:
         - name: Check K8s files
           run: cat kubernetes/development/*.yaml 
 
+        - name: Create namespace if not exists
+          run: |
+            kubectl get namespace ${{ vars.NAMESPACE }} || kubectl create namespace ${{ vars.NAMESPACE }}
+
         - name: Create MongoDB Secret
           run: |
             kubectl -n ${{ vars.NAMESPACE }} create secret generic mongo-db-creds \
