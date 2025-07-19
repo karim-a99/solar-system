@@ -231,4 +231,4 @@ jobs:
             -o yaml | kubectl apply -f -
 
         - name: Deploy dev env 
-          run: kubect apply -f kubernetes/development
+          run: kubectl apply -f kubernetes/development
