@@ -195,11 +195,12 @@ jobs:
             kubectl -n ingress-nginx describe deployment ingress-nginx-controller
             kubectl -n ingress-nginx logs deploy/ingress-nginx-controller || true
 
+        - name: Set INGRESS_IP manually
+          run: echo "INGRESS_IP=127.0.0.1" >> $GITHUB_ENV
 
-
-        - name: Save Nginx Ingress Controller IP as a GITHUB Environment Variable
-          run: |   
-            echo "INGRESS_IP=$(kubectl -n ingress-nginx get services ingress-nginx-controller -o jsonpath="{.status.loadBalancer.ingress[0].ip}")" >> $GITHUB_ENV
+        # - name: Save Nginx Ingress Controller IP as a GITHUB Environment Variable
+        #   run: |   
+        #     echo "INGRESS_IP=$(kubectl -n ingress-nginx get services ingress-nginx-controller -o jsonpath="{.status.loadBalancer.ingress[0].ip}")" >> $GITHUB_ENV
 
         - name: replace placeholders in manifest files
           uses: cschleiden/replace-tokens@v1
